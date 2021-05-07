@@ -9,6 +9,7 @@ public class HPMgr : MonoBehaviour
     public GameObject heart2;
     public GameObject heart3;
     public Entity player;
+    public GameOverMgr gmOvrMgr;
     public void DamagePlayer()
     {
         player.GetComponent<PlayerInvulnerabilityTime>().enabled = true;
@@ -21,8 +22,7 @@ public class HPMgr : MonoBehaviour
         }else if (heart3.activeInHierarchy)
         {
             heart3.SetActive(false);
-            Debug.Log("Here");
-            player.entityMgr.RemoveEntity(player.gameObject.name);
+            gmOvrMgr.GameOver();
         }
     }
 
