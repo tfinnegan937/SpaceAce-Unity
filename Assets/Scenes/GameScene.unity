@@ -5480,8 +5480,18 @@ MonoBehaviour:
     - ent: {fileID: 61427006}
       spawner: 19
     activeEntities: []
-    isTimed: 0
-    time: 0
+    isTimed: 1
+    time: 30
+  - spawnRecords:
+    - ent: {fileID: 61427006}
+      spawner: 1
+    - ent: {fileID: 61427006}
+      spawner: 10
+    - ent: {fileID: 61427006}
+      spawner: 19
+    activeEntities: []
+    isTimed: 1
+    time: 30
   curSpawnList:
     spawnRecords: []
     activeEntities: []
