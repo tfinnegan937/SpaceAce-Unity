@@ -19,6 +19,8 @@ public class Entity : MonoBehaviour
     public int health;
     public Rigidbody rigidbody;
     public EntityMgr entityMgr;
+    public ScoreMgr scoreMgr;
+    public int scoreValue;
     void Start()
     {
         velocity = new Vector3(0, 0, 0);
@@ -102,15 +104,7 @@ public class Entity : MonoBehaviour
         health -= 1 * multiplier;
         if (health <= 0)
         {
-            AIAspect ai = gameObject.GetComponent<AIAspect>();
-            Debug.Log(ai);
-            //Debug.Log("here");
-
-            if (ai != null)
-            {
-                Debug.Log("here");
-                ai.destroyedByProjectile = true;
-            }
+            scoreMgr.AddScore(scoreValue);
             entityMgr.RemoveEntity(this.gameObject.name);
  
 
