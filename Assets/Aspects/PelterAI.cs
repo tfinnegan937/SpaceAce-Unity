@@ -112,15 +112,5 @@ public class PelterAI : AIAspect
         state = State.Selecting;
     }
 
-    bool IsOnCamera()
-    {
-        Camera camera = Camera.main;
-        Vector3 pos = camera.WorldToViewportPoint(transform.position);
-        if (pos.x >= 0 && pos.x <= 1)
-        {
-            return true;
-        }
 
-        return false;
-    }
 }
