@@ -18,6 +18,7 @@ public class StreamerAI : AIAspect
     public ProjectileMgr projMgr;
     public int numSwitchLeave;
     private int numSwitch;
+    public AudioMgr audioMgr;
     [System.Serializable]
     public enum State
     {
@@ -104,6 +105,7 @@ public class StreamerAI : AIAspect
     {
         if (Time.time >= timeTilFire)
         {
+            audioMgr.PlayStreamer();
             projMgr.SpawnProjectile(proj, projLoc.position);
             timeTilFire = Time.time + (1 / fireRate);
             fireCount++;

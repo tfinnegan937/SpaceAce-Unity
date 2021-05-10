@@ -8,6 +8,7 @@ public class EntityMgr : MonoBehaviour
     public List<Entity> Entities;
     public GameObject EntityObject;
     public GameObject healthPickup;
+    public VictoryMgr vicMgr;
     void Awake()
     {
         inst = this;
@@ -49,6 +50,10 @@ public class EntityMgr : MonoBehaviour
                     healthPickup.transform.position = ent.transform.position;
                 }
 
+                if (ent.GetComponent<FinalBoss>())
+                {
+                    vicMgr.Victory();
+                }
                 Entities.Remove(ent);
                 Destroy(ent.gameObject);
             }
