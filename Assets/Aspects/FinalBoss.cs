@@ -1,6 +1,8 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public class FinalBoss : AIAspect
 {
@@ -34,6 +36,7 @@ public class FinalBoss : AIAspect
     public Vector3 curIdlePt;
     public int numIdleRot;
     public Vector3 nextMissPt;
+    private bool dashing = false;
     void Start()
     {
         state = BossState.Entering;
@@ -156,6 +159,7 @@ public class FinalBoss : AIAspect
         if (Vector3.Distance(transform.position, ptMgr.GetChargePt()) < .3f)
         {
             state = BossState.Dashing;
+            dashing = true;
             ent.SetVelocity(ent.maxSpeed * new Vector3(-1, 0, 0));
         }
     }
@@ -203,8 +207,8 @@ public class FinalBoss : AIAspect
             state = BossState.Idling;
         }else if (diceRoll < 75)
         {
-            state = BossState.MovingToMissilePt;
-            //curGunPt = ptMgr.GetNextGunPt();        
+            state = BossState.MovingToMainGunPt;
+            curGunPt = ptMgr.GetNextGunPt();        
         }else if (diceRoll < 90)
         {
             state = BossState.MovingToMissilePt;
@@ -220,6 +224,8 @@ public class FinalBoss : AIAspect
     {
         transform.position = ptMgr.GetTeleportPoint();
         state = BossState.Resetting;
+        dashing = false;
+        GetComponent<Collider>().enabled = true;
     }
 
     void MoveTo(Vector3 pos, bool MaxSpeed = false)
@@ -239,4 +245,13 @@ public class FinalBoss : AIAspect
  
         ent.SetVelocity(vel);
     }
+
+    private void OnCollisionEnter(Collision other)
+    {
+        if (other.gameObject.CompareTag("Player") && dashing)
+        {
+            GetComponent<Collider>().enabled = false;
+        }
+    }
 }
+

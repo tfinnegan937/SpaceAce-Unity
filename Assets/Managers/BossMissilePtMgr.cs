@@ -28,8 +28,14 @@ public class BossMissilePtMgr : MonoBehaviour
 
 
     }
-    
 
+    void Update()
+    {
+        pts[0] = pt1.position;
+        pts[1] = pt2.position;
+        pts[2] = pt3.position;
+        pts[3] = pt4.position;
+    }
     public void Reset()
     {
         fired = 0;
