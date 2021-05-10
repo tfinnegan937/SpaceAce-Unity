@@ -2040,7 +2040,7 @@ MonoBehaviour:
   playerLine: {fileID: 1349612293}
   followSpeed: 10
   followPoint: {x: 0, y: 0, z: 0}
-  chargeTime: 20
+  chargeTime: 4
   timeTilCharge: 0
   cameraRectTopLeft: {x: 0, y: 0, z: 0}
   cameraRectBottomRight: {x: 0, y: 0, z: 0}
@@ -8376,8 +8376,162 @@ MonoBehaviour:
     - ent: {fileID: 61427006}
       spawner: 17
     activeEntities: []
+    isTimed: 1
+    time: 20
+  - spawnRecords:
+    - ent: {fileID: 367461165}
+      spawner: 3
+    activeEntities: []
     isTimed: 0
-    time: 0
+    time: 20
+  - spawnRecords:
+    - ent: {fileID: 61427006}
+      spawner: 3
+    - ent: {fileID: 61427006}
+      spawner: 6
+    - ent: {fileID: 367461165}
+      spawner: 4
+    - ent: {fileID: 61427006}
+      spawner: 2
+    - ent: {fileID: 61427006}
+      spawner: 7
+    - ent: {fileID: 741432368}
+      spawner: 1
+    - ent: {fileID: 741432368}
+      spawner: 17
+    activeEntities: []
+    isTimed: 1
+    time: 15
+  - spawnRecords:
+    - ent: {fileID: 61427006}
+      spawner: 3
+    - ent: {fileID: 61427006}
+      spawner: 5
+    - ent: {fileID: 367461165}
+      spawner: 6
+    - ent: {fileID: 61427006}
+      spawner: 12
+    - ent: {fileID: 61427006}
+      spawner: 13
+    - ent: {fileID: 367461165}
+      spawner: 1
+    - ent: {fileID: 367461165}
+      spawner: 17
+    activeEntities: []
+    isTimed: 0
+    time: 20
+  - spawnRecords:
+    - ent: {fileID: 741432368}
+      spawner: 1
+    - ent: {fileID: 741432368}
+      spawner: 17
+    - ent: {fileID: 367461165}
+      spawner: 3
+    - ent: {fileID: 367461165}
+      spawner: 6
+    activeEntities: []
+    isTimed: 1
+    time: 15
+  - spawnRecords:
+    - ent: {fileID: 61427006}
+      spawner: 1
+    - ent: {fileID: 61427006}
+      spawner: 17
+    - ent: {fileID: 61427006}
+      spawner: 3
+    - ent: {fileID: 61427006}
+      spawner: 6
+    - ent: {fileID: 61427006}
+      spawner: 6
+    activeEntities: []
+    isTimed: 0
+    time: 15
+  - spawnRecords:
+    - ent: {fileID: 61427006}
+      spawner: 1
+    - ent: {fileID: 61427006}
+      spawner: 2
+    - ent: {fileID: 61427006}
+      spawner: 3
+    - ent: {fileID: 61427006}
+      spawner: 4
+    - ent: {fileID: 61427006}
+      spawner: 5
+    - ent: {fileID: 61427006}
+      spawner: 6
+    - ent: {fileID: 61427006}
+      spawner: 7
+    - ent: {fileID: 61427006}
+      spawner: 8
+    - ent: {fileID: 61427006}
+      spawner: 9
+    - ent: {fileID: 61427006}
+      spawner: 10
+    - ent: {fileID: 61427006}
+      spawner: 11
+    - ent: {fileID: 61427006}
+      spawner: 12
+    - ent: {fileID: 61427006}
+      spawner: 13
+    - ent: {fileID: 61427006}
+      spawner: 14
+    - ent: {fileID: 61427006}
+      spawner: 15
+    activeEntities: []
+    isTimed: 1
+    time: 30
+  - spawnRecords:
+    - ent: {fileID: 741432368}
+      spawner: 1
+    - ent: {fileID: 741432368}
+      spawner: 17
+    activeEntities: []
+    isTimed: 1
+    time: 15
+  - spawnRecords:
+    - ent: {fileID: 61427006}
+      spawner: 15
+    - ent: {fileID: 61427006}
+      spawner: 4
+    - ent: {fileID: 61427006}
+      spawner: 3
+    - ent: {fileID: 61427006}
+      spawner: 7
+    - ent: {fileID: 61427006}
+      spawner: 2
+    - ent: {fileID: 367461165}
+      spawner: 10
+    activeEntities: []
+    isTimed: 1
+    time: 15
+  - spawnRecords:
+    - ent: {fileID: 61427006}
+      spawner: 1
+    - ent: {fileID: 61427006}
+      spawner: 2
+    - ent: {fileID: 61427006}
+      spawner: 3
+    - ent: {fileID: 61427006}
+      spawner: 4
+    - ent: {fileID: 61427006}
+      spawner: 5
+    - ent: {fileID: 61427006}
+      spawner: 6
+    - ent: {fileID: 61427006}
+      spawner: 7
+    - ent: {fileID: 61427006}
+      spawner: 12
+    - ent: {fileID: 61427006}
+      spawner: 13
+    - ent: {fileID: 61427006}
+      spawner: 14
+    - ent: {fileID: 61427006}
+      spawner: 15
+    - ent: {fileID: 61427006}
+      spawner: 16
+    activeEntities: []
+    isTimed: 0
+    time: 15
   curSpawnList:
     spawnRecords: []
     activeEntities: []
@@ -8836,7 +8990,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1953802254}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -5}
+  m_LocalPosition: {x: 9.9, y: 0, z: -5}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 944059251}
