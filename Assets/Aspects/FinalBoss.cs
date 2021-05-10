@@ -37,6 +37,7 @@ public class FinalBoss : AIAspect
     {
         state = BossState.Entering;
         ent = GetComponent<Entity>();
+        Random.seed = System.DateTime.Now.Millisecond;
     }
 
     // Update is called once per frame
@@ -97,7 +98,12 @@ public class FinalBoss : AIAspect
 
     void MovingToMainGunPt()
     {
-        
+        MoveTo(curGunPt);
+
+        if (Vector3.Distance(transform.position, curGunPt) < .1f)
+        {
+            state = BossState.FiringMainGun;
+        }
     }
 
     void FiringMainGun()
@@ -182,7 +188,27 @@ public class FinalBoss : AIAspect
 
     void SelectingNextPattern()
     {
-        
+        float diceRoll = Random.Range(0, 100);
+
+        if (diceRoll < 25)
+        {
+            state = BossState.Idling;
+        }else if (diceRoll < 50)
+        {
+            state = BossState.MovingToMissilePt;
+        }else if (diceRoll < 75)
+        {
+            state = BossState.MovingToMainGunPt;
+            curGunPt = ptMgr.GetNextGunPt();
+        }else if (diceRoll < 88)
+        {
+            state = BossState.SpawningStreamers;
+        }
+        else
+        {
+            state = BossState.ChargingDash;
+        }
+
     }
 
     void TeleportingBack()
