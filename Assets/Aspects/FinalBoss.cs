@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class FinalBoss : MonoBehaviour
+public class FinalBoss : AIAspect
 {
     // Start is called before the first frame update
     [System.Serializable]
@@ -27,9 +27,16 @@ public class FinalBoss : MonoBehaviour
     public BossPtMgr ptMgr;
     public Projectile missileProj;
     public Projectile mainProj;
+    public ProjectileMgr projMgr;
+    private Entity ent;
+    public float speed;
+    private Vector3 curGunPt;
+    private Vector3 curIdlePt;
+    public int numIdleRot;
     void Start()
     {
         state = BossState.Entering;
+        ent = GetComponent<Entity>();
     }
 
     // Update is called once per frame
@@ -79,7 +86,13 @@ public class FinalBoss : MonoBehaviour
 
     void Entering()
     {
-        
+        MoveTo(ptMgr.GetResetPt());
+
+        if (Vector3.Distance(transform.position, ptMgr.GetResetPt()) < .1f)
+        {
+            state = BossState.Idling;
+            curIdlePt = ptMgr.GetNextIdlePt();
+        }
     }
 
     void MovingToMainGunPt()
@@ -89,17 +102,33 @@ public class FinalBoss : MonoBehaviour
 
     void FiringMainGun()
     {
-        
+        projMgr.SpawnProjectile(mainProj, ptMgr.GetFirePt());
+        state = BossState.MovingToMainGunPt;
+        if (ptMgr.DoneFiring())
+        {
+            state = BossState.Resetting;
+            ptMgr.ResetMainGun();
+        }
     }
 
     void MovingToMissilePt()
     {
-        
+        MoveTo(ptMgr.GetMissilePt());
+
+        if (Vector3.Distance(transform.position, ptMgr.GetMissilePt()) < .1f)
+        {
+            state = BossState.FiringMissiles;
+        }
     }
 
     void FiringMissiles()
     {
-        
+        projMgr.SpawnProjectile(missileProj, missilePtMgr.GetNextPt());
+        if (missilePtMgr.DoneFiring())
+        {
+            state = BossState.Resetting;
+            missilePtMgr.Reset();
+        }
     }
 
     void SpawningStreamers()
@@ -109,22 +138,46 @@ public class FinalBoss : MonoBehaviour
 
     void ChargingDash()
     {
-        
+        MoveTo(ptMgr.GetChargePt());
+
+        if (Vector3.Distance(transform.position, ptMgr.GetChargePt()) < .1f)
+        {
+            state = BossState.Dashing;
+            ent.SetVelocity(ent.maxSpeed * new Vector3(-1, 0, 0));
+        }
     }
 
     void Dashing()
     {
-        
+        if (transform.position.x < ptMgr.GetDashEndX())
+        {
+            state = BossState.TeleportingBack;
+        }
     }
 
     void Resetting()
     {
-        
+        MoveTo(ptMgr.GetResetPt());
+
+        if (Vector3.Distance(transform.position, ptMgr.GetResetPt()) < .1f)
+        {
+            state = BossState.SelectingNextPattern;
+        }
     }
 
     void Idling()
     {
-        
+        MoveTo(curIdlePt);
+
+        if (Vector3.Distance(curIdlePt, transform.position) < .1f)
+        {
+            curIdlePt = ptMgr.GetNextIdlePt();
+        }
+
+        if (ptMgr.DoneIdling(numIdleRot))
+        {
+            state = BossState.Resetting;
+        }
     }
 
     void SelectingNextPattern()
@@ -134,6 +187,25 @@ public class FinalBoss : MonoBehaviour
 
     void TeleportingBack()
     {
-        
+        transform.position = ptMgr.GetTeleportPoint();
+        state = BossState.Resetting;
+    }
+
+    void MoveTo(Vector3 pos, bool MaxSpeed = false)
+    {
+        Vector3 diff = pos - transform.position;
+        float desiredHeading = Mathf.Atan2(diff.y, diff.x);
+        float curSpeed = speed;
+        if (MaxSpeed)
+        {
+            curSpeed = ent.maxSpeed;
+        }
+        Vector3 vel = new Vector3(
+            curSpeed * Mathf.Cos(desiredHeading),
+            curSpeed * Mathf.Sin(desiredHeading),
+            -5
+        );
+ 
+        ent.SetVelocity(vel);
     }
 }
