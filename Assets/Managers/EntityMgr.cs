@@ -29,6 +29,7 @@ public class EntityMgr : MonoBehaviour
         CurEnt = EntityObj.GetComponent<Entity>();
         if (CurEnt != null)
         {
+            Debug.Log("ENTITY EXISTS");
             EntityObj.transform.parent = EntityObject.transform; //Child new entity to EntityObj
             Entities.Add(CurEnt);
         }

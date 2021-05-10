@@ -42,6 +42,7 @@ public class ProjectileMgr : MonoBehaviour
         GameObject projInst = Instantiate(proj.gameObject);
         projInst.SetActive(true);
         projInst.transform.position = pos;
+        Debug.Log("Spawned");
         entityMgr.AddEntity(projInst);
     }
     

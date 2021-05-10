@@ -30,9 +30,10 @@ public class FinalBoss : AIAspect
     public ProjectileMgr projMgr;
     private Entity ent;
     public float speed;
-    private Vector3 curGunPt;
-    private Vector3 curIdlePt;
+    public Vector3 curGunPt;
+    public Vector3 curIdlePt;
     public int numIdleRot;
+    public Vector3 nextMissPt;
     void Start()
     {
         state = BossState.Entering;
@@ -89,7 +90,7 @@ public class FinalBoss : AIAspect
     {
         MoveTo(ptMgr.GetResetPt());
 
-        if (Vector3.Distance(transform.position, ptMgr.GetResetPt()) < .1f)
+        if (Vector3.Distance(transform.position, ptMgr.GetResetPt()) < .3f)
         {
             state = BossState.Idling;
             curIdlePt = ptMgr.GetNextIdlePt();
@@ -100,8 +101,9 @@ public class FinalBoss : AIAspect
     {
         MoveTo(curGunPt);
 
-        if (Vector3.Distance(transform.position, curGunPt) < .1f)
+        if (Vector3.Distance(transform.position, curGunPt) < .3f)
         {
+            ent.SetVelocity(Vector3.zero);
             state = BossState.FiringMainGun;
         }
     }
@@ -114,22 +116,27 @@ public class FinalBoss : AIAspect
         {
             state = BossState.Resetting;
             ptMgr.ResetMainGun();
+            return;
         }
+
+        curGunPt = ptMgr.GetNextGunPt();
     }
 
     void MovingToMissilePt()
     {
         MoveTo(ptMgr.GetMissilePt());
 
-        if (Vector3.Distance(transform.position, ptMgr.GetMissilePt()) < .1f)
+        if (Vector3.Distance(transform.position, ptMgr.GetMissilePt()) < .3f)
         {
+            ent.SetVelocity(Vector3.zero);
             state = BossState.FiringMissiles;
         }
     }
 
     void FiringMissiles()
     {
-        projMgr.SpawnProjectile(missileProj, missilePtMgr.GetNextPt());
+        nextMissPt = missilePtMgr.GetNextPt();
+        projMgr.SpawnProjectile(missileProj, nextMissPt);
         if (missilePtMgr.DoneFiring())
         {
             state = BossState.Resetting;
@@ -146,7 +153,7 @@ public class FinalBoss : AIAspect
     {
         MoveTo(ptMgr.GetChargePt());
 
-        if (Vector3.Distance(transform.position, ptMgr.GetChargePt()) < .1f)
+        if (Vector3.Distance(transform.position, ptMgr.GetChargePt()) < .3f)
         {
             state = BossState.Dashing;
             ent.SetVelocity(ent.maxSpeed * new Vector3(-1, 0, 0));
@@ -165,7 +172,7 @@ public class FinalBoss : AIAspect
     {
         MoveTo(ptMgr.GetResetPt());
 
-        if (Vector3.Distance(transform.position, ptMgr.GetResetPt()) < .1f)
+        if (Vector3.Distance(transform.position, ptMgr.GetResetPt()) < .3f)
         {
             state = BossState.SelectingNextPattern;
         }
@@ -175,13 +182,14 @@ public class FinalBoss : AIAspect
     {
         MoveTo(curIdlePt);
 
-        if (Vector3.Distance(curIdlePt, transform.position) < .1f)
+        if (Vector3.Distance(curIdlePt, transform.position) < .3f)
         {
             curIdlePt = ptMgr.GetNextIdlePt();
         }
 
         if (ptMgr.DoneIdling(numIdleRot))
         {
+            ptMgr.ResetIdle();
             state = BossState.Resetting;
         }
     }
@@ -190,19 +198,16 @@ public class FinalBoss : AIAspect
     {
         float diceRoll = Random.Range(0, 100);
 
-        if (diceRoll < 25)
+        if (diceRoll < 0)
         {
             state = BossState.Idling;
-        }else if (diceRoll < 50)
-        {
-            state = BossState.MovingToMissilePt;
         }else if (diceRoll < 75)
         {
-            state = BossState.MovingToMainGunPt;
-            curGunPt = ptMgr.GetNextGunPt();
-        }else if (diceRoll < 88)
+            state = BossState.MovingToMissilePt;
+            //curGunPt = ptMgr.GetNextGunPt();        
+        }else if (diceRoll < 90)
         {
-            state = BossState.SpawningStreamers;
+            state = BossState.MovingToMissilePt;
         }
         else
         {

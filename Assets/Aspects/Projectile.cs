@@ -79,6 +79,7 @@ public class Projectile : MonoBehaviour
             ent.Damage();
         }
 
+        Debug.Log("COLLIDED");
         ent.entityMgr.RemoveEntity(gameObject.name);
 
     }

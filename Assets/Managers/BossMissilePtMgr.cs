@@ -9,8 +9,8 @@ public class BossMissilePtMgr : MonoBehaviour
     public Transform pt2;
     public Transform pt3;
     public Transform pt4;
-    private List<Vector3> pts;
-    private int fired = 0;
+    public List<Vector3> pts;
+    public int fired = 0;
 
     public static BossMissilePtMgr inst;
 

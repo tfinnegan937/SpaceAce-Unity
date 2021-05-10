@@ -16,8 +16,8 @@ public class BossPtMgr : MonoBehaviour
     public Transform teleportPt;
     public Transform DashStopPt;
     public Transform FirePt;
-    private List<Vector3> gunPts;
-    private List<Vector3> idlePts;
+    public List<Vector3> gunPts;
+    public List<Vector3> idlePts;
 
     private int idleIndex;
     private int timesIdled;

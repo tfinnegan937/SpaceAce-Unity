@@ -116,7 +116,7 @@ public class ChargerAI : AIAspect
     {
         ent.SetVelocity(new Vector3(-1 * ent.maxSpeed, 0, 0));
 
-        if (transform.position.z < cameraRectTopLeft.x -4)
+        if (transform.position.x < cameraRectTopLeft.x -4)
         {
             ent.entityMgr.RemoveEntity(gameObject.name);
         }
