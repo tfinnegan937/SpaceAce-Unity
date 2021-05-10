@@ -12,6 +12,7 @@ public class SceneMgr : MonoBehaviour
     public EntityMgr entityMgr;
     public SpawnMgr spawnMgr;
     public float time;
+    public AudioMgr audioMgr;
     [System.Serializable]
     public struct SpawnRecord
     {
@@ -42,6 +43,8 @@ public class SceneMgr : MonoBehaviour
     public WaveType state = WaveType.NotStarted;
     private bool started = false;
     public float waveEndTime;
+    public bool BossSpawned = false;
+    public GameObject FinalBoss;
     void Awake()
     {
         inst = this;
@@ -67,6 +70,15 @@ public class SceneMgr : MonoBehaviour
         else if(spawnLists.Count > 0)
         {
             ProcessNextSpawnList();
+        }
+        else
+        {
+            if (!BossSpawned)
+            {
+                BossSpawned = true;
+                FinalBoss.SetActive(true);
+                audioMgr.BeginBossMusic();
+            }
         }
         
     }
@@ -127,6 +139,11 @@ public class SceneMgr : MonoBehaviour
         {
             started = false;
         }
+    }
+
+    public void AddSpawnList(SpawnList list)
+    {
+        spawnLists.Add(list);
     }
   
 }

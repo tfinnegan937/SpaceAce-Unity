@@ -5,6 +5,7 @@ using UnityEngine;
 public class ProjectileMgr : MonoBehaviour
 {
     public static ProjectileMgr inst;
+    public AudioMgr audioMgr;
     void Awake()
     {
         inst = this;
@@ -27,6 +28,7 @@ public class ProjectileMgr : MonoBehaviour
     {
         if (playerFirePoint)
         {
+            audioMgr.PlayPlayerBlaster();
             GameObject projInst = Instantiate(playerProjectile.gameObject);
             projInst.SetActive(true);
             projInst.GetComponent<Projectile>().firePoint = playerFirePoint;

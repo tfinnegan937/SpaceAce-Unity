@@ -25,6 +25,7 @@ public class PelterAI : AIAspect
     public Projectile projectile;
     public GameObject projPoint;
     public Vector3 projSpawnLoc;
+    public AudioMgr audioMgr;
     void Start()
     {
         ent = GetComponent<Entity>();
@@ -108,6 +109,7 @@ public class PelterAI : AIAspect
 
     void Firing()
     {
+        audioMgr.PlayPelter();
         projectileMgr.SpawnProjectile(projectile, projSpawnLoc);
         state = State.Selecting;
     }

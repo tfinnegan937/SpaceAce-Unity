@@ -18,4 +18,6 @@ public class PlayerHitDamage : MonoBehaviour
             hpMgr.DamagePlayer();
         }
     }
+    
+    
 }

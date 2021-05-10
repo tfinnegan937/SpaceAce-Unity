@@ -7,7 +7,7 @@ public class EntityMgr : MonoBehaviour
     public static EntityMgr inst;
     public List<Entity> Entities;
     public GameObject EntityObject;
-
+    public GameObject healthPickup;
     void Awake()
     {
         inst = this;
@@ -41,6 +41,14 @@ public class EntityMgr : MonoBehaviour
         {
             if (ent.gameObject.transform.name == name)
             {
+                int randChance = Random.Range(0, 100);
+                if (randChance < 20 && !ent.gameObject.CompareTag("Projectile"))
+                {
+                    GameObject healthObj = Instantiate(healthPickup);
+                    healthPickup.SetActive(true);
+                    healthPickup.transform.position = ent.transform.position;
+                }
+
                 Entities.Remove(ent);
                 Destroy(ent.gameObject);
             }

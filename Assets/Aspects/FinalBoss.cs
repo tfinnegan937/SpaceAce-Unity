@@ -15,7 +15,7 @@ public class FinalBoss : AIAspect
         FiringMainGun,
         MovingToMissilePt,
         FiringMissiles,
-        SpawningStreamers,
+        SpawningAdds,
         ChargingDash,
         Dashing,
         Resetting,
@@ -37,6 +37,7 @@ public class FinalBoss : AIAspect
     public int numIdleRot;
     public Vector3 nextMissPt;
     private bool dashing = false;
+    public BossSpawnMgr spawnMgr;
     void Start()
     {
         state = BossState.Entering;
@@ -65,8 +66,8 @@ public class FinalBoss : AIAspect
             case BossState.FiringMainGun:
                 FiringMainGun();
                 break;
-            case BossState.SpawningStreamers:
-                SpawningStreamers();
+            case BossState.SpawningAdds:
+                SpawningAdds();
                 break;
             case BossState.ChargingDash:
                 ChargingDash();
@@ -147,9 +148,10 @@ public class FinalBoss : AIAspect
         }
     }
 
-    void SpawningStreamers()
+    void SpawningAdds()
     {
-        
+        spawnMgr.SpawnRandomBossAdds();
+        state = BossState.Resetting;
     }
 
     void ChargingDash()
@@ -205,17 +207,21 @@ public class FinalBoss : AIAspect
         if (diceRoll < 0)
         {
             state = BossState.Idling;
-        }else if (diceRoll < 75)
+        }else if (diceRoll < 50)
         {
             state = BossState.MovingToMainGunPt;
             curGunPt = ptMgr.GetNextGunPt();        
-        }else if (diceRoll < 90)
+        }else if (diceRoll < 75)
         {
             state = BossState.MovingToMissilePt;
         }
-        else
+        else if (diceRoll < 85)
         {
             state = BossState.ChargingDash;
+        }
+        else
+        {
+            state = BossState.SpawningAdds;
         }
 
     }

@@ -13,6 +13,7 @@ public class Projectile : MonoBehaviour
     public bool isEnemy;
     public int negate = 1;
     public GameObject firePoint;
+    public AudioMgr audioMgr;
     public virtual void Start()
     {
         if (muzzlePrefab != null)
@@ -78,7 +79,8 @@ public class Projectile : MonoBehaviour
         {
             ent.Damage();
         }
-
+        audioMgr.PlayExplosion();
+        GetComponent<Collider>().enabled = false;
         Debug.Log("COLLIDED");
         ent.entityMgr.RemoveEntity(gameObject.name);
 
