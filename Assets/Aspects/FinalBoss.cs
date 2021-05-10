@@ -38,6 +38,7 @@ public class FinalBoss : AIAspect
     public Vector3 nextMissPt;
     private bool dashing = false;
     public BossSpawnMgr spawnMgr;
+    public AudioMgr audioMgr;
     void Start()
     {
         state = BossState.Entering;
@@ -116,6 +117,7 @@ public class FinalBoss : AIAspect
     {
         projMgr.SpawnProjectile(mainProj, ptMgr.GetFirePt());
         state = BossState.MovingToMainGunPt;
+        audioMgr.PlayStreamer();
         if (ptMgr.DoneFiring())
         {
             state = BossState.Resetting;
@@ -129,7 +131,7 @@ public class FinalBoss : AIAspect
     void MovingToMissilePt()
     {
         MoveTo(ptMgr.GetMissilePt());
-
+        audioMgr.PlayPelter();
         if (Vector3.Distance(transform.position, ptMgr.GetMissilePt()) < .3f)
         {
             ent.SetVelocity(Vector3.zero);
