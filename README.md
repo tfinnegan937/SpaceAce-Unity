@@ -8,3 +8,4 @@ such as modularity, polymorphism, the use of a complex system of managers, and a
 
 The game has one full complete level, and a difficult boss fight with a complex attack pattern.
 
+All of the art and sound assets are royalty-free, and none were created by me. This project was an exercise in programming.
